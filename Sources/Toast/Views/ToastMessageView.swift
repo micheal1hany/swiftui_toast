@@ -1,7 +1,7 @@
 //
 //  ToastMessageView.swift
 //
-//  Created by James Sedlacek on 12/17/23.
+//  Created by Micheal Hany on 12/17/23.
 //
 
 import SwiftUI
@@ -24,7 +24,7 @@ struct ToastMessageView<TrailingView: View>: View {
                 .font(.system(size: 24, weight: .medium))
                 .foregroundColor(toast.color)
 
-            Text(toast.message)
+            Text(LocalizedStringKey(toast.message),bundle: toast.bundle)
                 .font(.system(size: 18, weight: .semibold))
                 .foregroundColor(.primary)
 
