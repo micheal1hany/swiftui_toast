@@ -1,11 +1,11 @@
-// swift-tools-version: 6.0
+// swift-tools-version:6.0
+//  Package.swift
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
     name: "Toast",
-    defaultLocalization: "en",
     platforms: [
         .iOS(.v14)
     ],
@@ -21,5 +21,6 @@ let package = Package(
         .target(
             name: "Toast",path: "Sources"),
         
-    ]
+    ],
+    swiftLanguageVersions: [.v6]
 )
