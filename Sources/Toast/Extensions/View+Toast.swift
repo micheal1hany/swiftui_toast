@@ -9,12 +9,18 @@ import SwiftUI
 /// Extension to add a toast to any View.
 public extension View {
     /// Shows a toast with a provided configuration.
+    ///
     /// - Parameters:
     ///   - toast: A binding to the toast to display.
-    ///   - edge: The edge of the screen where the toast appears.
-    ///   - autoDismissable: Whether the toast should automatically dismiss.
-    ///   - onDismiss: A closure to call when the toast is dismissed.
-    ///   - trailingView: A closure that returns a trailing view to be displayed in the toast.
+    ///   - edge: The edge of the screen where the toast appears (`.top` or `.bottom`).
+    ///   - toastLength: The duration the toast is displayed (`.short`, `.long`, or custom).
+    ///   - autoDismissible: Whether the toast should automatically dismiss after the duration.
+    ///   - onDismiss: A closure called when the toast is dismissed.
+    ///   - backgroundColor: Optional color to use as the toast's background.
+    ///   - textColor: Optional color for the toast's message text.
+    ///   - trailingView: A closure returning a custom trailing view to display (e.g., button, icon).
+    ///   - messageView: A closure returning a custom view for the toast's message (overrides default text).
+    ///   - backgroundView: A closure returning a custom background view for the toast (e.g., gradient, image).
     func toast<TrailingView: View,MessageView: View,BackgroundView:View>(
         _ toast: Binding<Toast?>,
         edge: ToastEdge = .top,
