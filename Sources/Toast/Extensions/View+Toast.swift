@@ -15,22 +15,30 @@ public extension View {
     ///   - autoDismissable: Whether the toast should automatically dismiss.
     ///   - onDismiss: A closure to call when the toast is dismissed.
     ///   - trailingView: A closure that returns a trailing view to be displayed in the toast.
-    func toast<TrailingView: View>(
+    func toast<TrailingView: View,MessageView: View,BackgroundView:View>(
         _ toast: Binding<Toast?>,
         edge: ToastEdge = .top,
         toastLength: ToastLength = .short,
         autoDismissible: Bool = true,
         onDismiss: @escaping () -> Void = {},
-        @ViewBuilder trailingView: @escaping () -> TrailingView = { EmptyView() }
+        backgroundColor: Color? = nil,
+        textColor: Color? = nil,
+        @ViewBuilder trailingView: () -> TrailingView = { EmptyView() },
+        @ViewBuilder messageView: () -> MessageView = { EmptyView() },
+        @ViewBuilder backgroundView: () -> BackgroundView = { EmptyView() }
     ) -> some View {
         modifier(
             ToastModifier(
                 toast: toast,
+                backgroundColor: backgroundColor,
+                textColor: textColor,
                 edge: edge,
                 isAutoDismissed: autoDismissible,
                 toastLength: toastLength,
                 onDismiss: onDismiss,
-                trailingView: trailingView()
+                trailingView: trailingView(),
+                messageView: messageView(),
+                backgroundView: backgroundView()
             )
         )
     }

@@ -7,13 +7,17 @@
 import SwiftUI
 
 @MainActor
-struct ToastModifier<TrailingView: View>: ViewModifier {
+struct ToastModifier<TrailingView: View,MessageView: View,BackgroundView:View>: ViewModifier {
     private let edge: ToastEdge
     private let offset: CGFloat
     private let isAutoDismissed: Bool
     private var toastLength: ToastLength
     private let onDismiss: () -> Void
+    private let backgroundColor: Color?
+    private let textColor: Color?
     private let trailingView: TrailingView
+    private let messageView: MessageView
+    private let backgroundView: BackgroundView
     @Binding private var toast: Toast?
     @State private var isPresented: Bool = false
 
@@ -23,17 +27,25 @@ struct ToastModifier<TrailingView: View>: ViewModifier {
 
     init(
         toast: Binding<Toast?>,
+        backgroundColor: Color? = nil,
+        textColor: Color? = nil,
         edge: ToastEdge,
         isAutoDismissed: Bool,
         toastLength: ToastLength,
         onDismiss: @escaping () -> Void,
-        trailingView: TrailingView
+        trailingView: TrailingView,
+        messageView: MessageView,
+        backgroundView: BackgroundView
     ) {
         self._toast = toast
+        self.backgroundColor = backgroundColor
+        self.textColor = textColor
         self.edge = edge
         self.isAutoDismissed = isAutoDismissed
         self.toastLength = toastLength
         self.trailingView = trailingView
+        self.messageView = messageView
+        self.backgroundView = backgroundView
         self.onDismiss = onDismiss
         self.offset = edge == .top ? -200 : 200
     }
@@ -86,7 +98,7 @@ struct ToastModifier<TrailingView: View>: ViewModifier {
     @ViewBuilder
     private func toastView() -> some View {
         if let toast {
-            ToastMessageView(toast, trailingView: { trailingView })
+            ToastMessageView(toast,backgroundColor: backgroundColor,textColor: textColor, trailingView: { trailingView },messageView: {messageView}, backgroundView: {backgroundView})
                 .offset(y: yOffset)
                 .gesture(dragGesture)
         }
